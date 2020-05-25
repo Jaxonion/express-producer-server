@@ -71,21 +71,6 @@ const AuthService = {
                 lyrics
             })
     }
-    /*saveToken(token) {
-        window.sessionStorage.setItem(TOKEN_KEY, token)
-    },
-    getAuthToken() {
-        return window.sessionStorage.getItem(TOKEN_KEY)
-    },
-    clearAuthToken() {
-        window.sessionStorage.removeItem(TOKEN_KEY)
-    },
-    hasAuthToken() {
-        return !!AuthService.getAuthToken()
-    },
-    makeBasicAuthToken(userName, password) {
-        return window.btoa(`${userName}:${password}`)
-    },*/
 }
 
 module.exports = AuthService;
