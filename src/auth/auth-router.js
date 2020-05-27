@@ -111,7 +111,7 @@ router
                         })
                     }
                     if ( result ) {
-                        jwt.sign(userData, JWT_SECRET, {expiresIn: '30m'}, (err, token) => {
+                        jwt.sign(userData, JWT_SECRET, {expiresIn: '1m'}, (err, token) => {
                             if (err){
                                 res.statusMessage = err.message;
                                 return res.status(400).end();
@@ -157,6 +157,7 @@ router
     .route('/update')
     
     .post((req, res, next) => {
+        let token = req.headers.sessiontoken;
         const { username, lyrics } = req.body;
         console.log(req.body)
         console.log(req.body.username.length)
@@ -166,17 +167,23 @@ router
                 error: 'need to log in'
             })
         }
-        AuthService.updateLyrics(
-            req.app.get('db'),
-            username,
-            lyrics
-        )
-            .then(response => {
-                console.log(response)
-                return res.status(200).json({
-                    message: 'updated lyrics'
+        jwt.verify(token, JWT_SECRET, (err, decode) => {
+            if(err) {
+                res.statusMessage = 'login timeout'
+                return res.status(401).end()
+            }
+            AuthService.updateLyrics(
+                req.app.get('db'),
+                username,
+                lyrics
+            )
+                .then(response => {
+                    console.log(response)
+                    return res.status(200).json({
+                        message: 'updated lyrics'
+                    })
                 })
-            })
+        })
         /*return res.status(200).json({
             message: 'updated lyrics'
         })*/
