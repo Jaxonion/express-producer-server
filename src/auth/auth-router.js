@@ -78,7 +78,7 @@ router
         const { username, password } = req.body;
         //console.log('username:', username, 'password:', password)
         const userInfo = { username, password };
-        console.log(userInfo)
+        //console.log(userInfo)
         if (!username || !password) {
             return res.status(400).json({
                 error: 'missing fields'
@@ -94,7 +94,7 @@ router
                         error: 'username or password incorrect'
                     })
                 }
-                console.log('USER', user)
+                //console.log('USER', user)
                 const userData = {
                     username: user.username,
                     email: user.email,
@@ -162,7 +162,7 @@ router
         console.log(req.body)
         console.log(req.body.username.length)
         if (!username || username.length < 1) {
-            console.log('no user')
+            //console.log('no user')
             return res.status(401).json({
                 error: 'need to log in'
             })
