@@ -13,7 +13,6 @@ router
     .post((req, res, next) => {
         const { username, email, password } = req.body;
         console.log('username:', username, 'email:', email, 'password:', password)
-        //res.send('successful signup')
         if (!username || !email || !password) {
             return res.status(401).json({
                 error: `Missing username, email or password`
@@ -76,9 +75,7 @@ router
     
     .post((req, res, next) => {
         const { username, password } = req.body;
-        //console.log('username:', username, 'password:', password)
         const userInfo = { username, password };
-        //console.log(userInfo)
         if (!username || !password) {
             return res.status(400).json({
                 error: 'missing fields'
@@ -94,7 +91,6 @@ router
                         error: 'username or password incorrect'
                     })
                 }
-                //console.log('USER', user)
                 const userData = {
                     username: user.username,
                     email: user.email,
@@ -102,9 +98,7 @@ router
                     lyrics: user.lyrics
                 }
                 bcrypt.compare(password, user.password, (err, result) => {
-                    console.log('ran')
-                    //console.log(err)
-                    //console.log(res)
+
                     if (!result) {
                         return res.status(401).json({
                             error: 'incorrect password'
@@ -122,16 +116,13 @@ router
                             });
                         })
                     }
-                    /*return res.status( 401 ).json({
-                        message: 'auth failed'
-                    })*/
                 })
             })
     })
 
     .get((req, res, next) => {
         let token = req.headers.sessiontoken;
-        //console.log(req.headers)
+
         console.log(req.params)
 
         jwt.verify(token, JWT_SECRET, (err, decoded) => {
@@ -146,12 +137,6 @@ router
             })
         })
     })
-/*
-router
-    .route('/refresh')
-
-    post('/refresh')
-*/
 
 router
     .route('/update')
@@ -162,7 +147,6 @@ router
         console.log(req.body)
         console.log(req.body.username.length)
         if (!username || username.length < 1) {
-            //console.log('no user')
             return res.status(401).json({
                 error: 'need to log in'
             })
@@ -184,8 +168,5 @@ router
                     })
                 })
         })
-        /*return res.status(200).json({
-            message: 'updated lyrics'
-        })*/
     })
 module.exports = router;
