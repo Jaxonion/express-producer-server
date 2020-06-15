@@ -95,7 +95,6 @@ router
                     username: user.username,
                     email: user.email,
                     password: user.password,
-                    lyrics: user.lyrics
                 }
                 bcrypt.compare(password, user.password, (err, result) => {
 
@@ -112,7 +111,7 @@ router
                             }
                             return res.status(200).json({ 
                                 token,
-                                lryics: userData.lyrics
+                                lyrics: userData.lryics
                             });
                         })
                     }
@@ -142,11 +141,9 @@ router
     .route('/update')
     
     .post((req, res, next) => {
-        let token = req.headers.sessiontoken;
         const { username, lyrics } = req.body;
-        console.log(req.body)
-        console.log(req.body.username.length)
-        if (!username || username.length < 1) {
+        let token = req.headers.sessiontoken;
+        if (!username || username.length < 1 || !token) {
             return res.status(401).json({
                 error: 'need to log in'
             })
